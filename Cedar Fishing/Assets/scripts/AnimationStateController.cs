@@ -18,8 +18,12 @@ public class AnimationStateController : MonoBehaviour
     {
         bool isWalking = animator.GetBool(isWalkingHash);
         bool forwardPressed = Keyboard.current != null && Keyboard.current.wKey.isPressed;
+
         bool runPressed = Keyboard.current != null && Keyboard.current.leftShiftKey.isPressed;
         bool isRunning = animator.GetBool(isRunningHash);
+
+        bool castingPressed = Keyboard.current != null && Keyboard.current.eKey.isPressed;
+        bool isCasting = animator.GetBool("isCasting");
 
         //if we're not walking and w is pressed
         if (!isWalking && forwardPressed)
@@ -38,11 +42,21 @@ public class AnimationStateController : MonoBehaviour
         {
             animator.SetBool(isRunningHash, true);
         }
-        
+
         //if we're running and either run key or w are not pressed
         if ((!runPressed || !forwardPressed) && isRunning)
         {
             animator.SetBool(isRunningHash, false);
+        }
+
+        if ((!forwardPressed && !isRunning) && !isCasting && castingPressed)
+        {
+            animator.SetBool("isCasting", true);
+        }
+
+        if (isCasting && !castingPressed)
+        {
+            animator.SetBool("isCasting", false);
         }
     }
 }
