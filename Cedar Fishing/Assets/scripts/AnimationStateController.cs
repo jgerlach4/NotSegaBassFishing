@@ -51,7 +51,7 @@ public class AnimationStateController : MonoBehaviour
 
         if ((!forwardPressed && !isRunning) && !isCasting && castingPressed)
         {
-            animator.SetBool("isCasting", true); 
+            animator.SetBool("isCasting", true);
         }
 
         if (isCasting && !castingPressed)
