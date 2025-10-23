@@ -4,7 +4,8 @@ using UnityEngine.InputSystem;
 public class AnimationStateController : MonoBehaviour
 {
     Animator animator;
-
+    int isWalkingHash = Animator.StringToHash("isWalking");
+    int isRunningHash = Animator.StringToHash("isRunning");
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,14 +16,33 @@ public class AnimationStateController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current != null && Keyboard.current.wKey.isPressed)
+        bool isWalking = animator.GetBool(isWalkingHash);
+        bool forwardPressed = Keyboard.current != null && Keyboard.current.wKey.isPressed;
+        bool runPressed = Keyboard.current != null && Keyboard.current.leftShiftKey.isPressed;
+        bool isRunning = animator.GetBool(isRunningHash);
+
+        //if we're not walking and w is pressed
+        if (!isWalking && forwardPressed)
         {
-            animator.SetBool("isWalking", true);
+            animator.SetBool(isWalkingHash, true);
+        }
+
+        //if we're walking and w is not pressed
+        if (isWalking && (!forwardPressed))
+        {
+            animator.SetBool(isWalkingHash, false);
+        }
+
+        //if we're not running and both w and run key are pressed
+        if ((forwardPressed && runPressed) && !isRunning)
+        {
+            animator.SetBool(isRunningHash, true);
         }
         
-        if (Keyboard.current == null || !Keyboard.current.wKey.isPressed)
+        //if we're running and either run key or w are not pressed
+        if ((!runPressed || !forwardPressed) && isRunning)
         {
-            animator.SetBool("isWalking", false);
+            animator.SetBool(isRunningHash, false);
         }
     }
 }
