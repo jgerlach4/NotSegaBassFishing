@@ -53,7 +53,11 @@ public class AnimationStateController : MonoBehaviour
         if ((!forwardPressed && !isRunning) && !isCasting && castingPressed)
         {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             animator.SetBool("isCasting", true);
+=======
+            animator.SetBool(isCastingHash, true); 
+>>>>>>> Stashed changes
 =======
             animator.SetBool(isCastingHash, true); 
 >>>>>>> Stashed changes
